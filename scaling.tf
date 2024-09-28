@@ -8,9 +8,9 @@ resource "aws_autoscaling_group" "web_asg" {
   desired_capacity     = 1
   vpc_zone_identifier  = [aws_subnet.public_subnet.id, aws_subnet.public_subnet_az2.id]
   launch_configuration = aws_launch_configuration.web-server-conf.name
-  placement_group = aws_placement_group.web_placement.id
+  placement_group      = aws_placement_group.web_placement.id
 
-  target_group_arns = [aws_lb_target_group.web_tg.arn]
+  target_group_arns    = [aws_lb_target_group.web_tg.arn]
 
   tag {
     key                 = "Name"
@@ -25,6 +25,7 @@ resource "aws_launch_configuration" "web-server-conf" {
   image_id        = data.aws_ami.ubuntu2204.id
   instance_type   = "t2.micro"
   security_groups =  [aws_security_group.tg_sg.id]
+  enable_monitoring = false
 
   user_data = <<-EOF
               #cloud-config
@@ -33,6 +34,7 @@ resource "aws_launch_configuration" "web-server-conf" {
               packages:
                 - nginx
                 - curl
+                - mysql-client-core-8.0
               runcmd:
                 - echo "Instance ID $(curl http://169.254.169.254/latest/meta-data/instance-id)" > /var/www/html/index.html
                 - echo "<html><body><h1>404 Not Found</h1> <p><nav><a href="/index.html">Home</a></nav></body></html>" > /var/www/html/cust_404.html
@@ -42,6 +44,7 @@ resource "aws_launch_configuration" "web-server-conf" {
                             internal;\
                           } ' /etc/nginx/sites-available/default
                 - systemctl restart nginx
+                - mysql -h ${aws_db_instance.mysql.address} -u ${aws_db_instance.mysql.username} -p'${aws_db_instance.mysql.password}' -e "USE wanted; CREATE TABLE IF NOT EXISTS user_ips(id INT PRIMARY KEY AUTO_INCREMENT, ip_from VARCHAR(45),created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);"
               users:
                 - name: ubuntu
                   shell: /bin/bash

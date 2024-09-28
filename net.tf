@@ -131,14 +131,6 @@ resource "aws_security_group" "db_sg" {
     protocol = "tcp"
     description = "Allow web server connect to Mysql port"
   }
-
-  ingress  {
-    security_groups = [aws_security_group.tg_sg.id]
-    description = "For troubleshooting from web server with SSH"
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-  }
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_internal_http" {
