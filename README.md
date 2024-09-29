@@ -1,4 +1,6 @@
 # A sample of IaC in AWS Cloud with Terraform
+
+## Summary
 The configuration code tries to implement the infrastructure that consists of follow components:
 1. An Application Load Balancer facing internet users and forwording requests to web servers
     - Redirect HTTP request to HTTPS listener
@@ -10,7 +12,7 @@ The configuration code tries to implement the infrastructure that consists of fo
 1. A serverless RDS instance
     - Allow only connect from the scaling group instances.
 
-## Keep in mind:
+## Keep in mind
 1. For each web server SSH port is open to public internet for debug and troubleshooting, which I don't recommand in production.
 1. It is never recommended to save database password in plain text and use admin to connect database for an application in production. although I've done in the demo
 1. In my mind, application deployment should be separated from infrastructure provision. For convinence to demo the infrastructure and web application in limited time, I combine both into one project. 
@@ -26,10 +28,10 @@ The configuration code tries to implement the infrastructure that consists of fo
 
 1. Prepare a self-signed certificate for HTTPS.
     + Use openssl to generate private.key, certificate.csr and certificate.crt in order:
-      > openssl genrsa -out private.key 2048
-      > openssl req -new -key private.key -out certificate.csr
-      > openssl x509 -req -days 366 -in certificate.csr -signkey private.key -out certificate.crt
-    + In AWS Certificate Manager(ACM) console, Select **Import certificate** and paste the contents of private.key and certificate.crt in _Certificate private key_ and _Certificate body_ to get a Certificate in ACM.
+       > openssl genrsa -out private.key 2048
+       > openssl req -new -key private.key -out certificate.csr
+       > openssl x509 -req -days 366 -in certificate.csr -signkey private.key -out certificate.crt
+    + In AWS Certificate Manager(ACM) console, Select **Import certificate** and paste the contents of private.key and certificate.crt in _**Certificate private key**_ and _**Certificate body**_ respectively to get a Certificate in ACM.
 1. Use ARN of the imported certificate as input variable *web_certificate_ar* for terraform run.
    Suggest create a file "*.tfvars" locally to specify all neccessary varaibles values via `-var-file` parameter , for example:
     ```
