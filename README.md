@@ -13,10 +13,11 @@ The configuration code tries to implement the infrastructure that consists of fo
     - Allow only connect from the scaling group instances.
 
 ## Keep in mind
-1. For each web server SSH port is open to public internet for debug and troubleshooting, which I don't recommand in production.
+1. For each web server SSH port is open to public internet for debug and troubleshooting, which I don't recommend in production.
 1. It is never recommended to save database password in plain text and use admin to connect database for an application in production. although I've done in the demo
 1. In my mind, application deployment should be separated from infrastructure provision. For convinence to demo the infrastructure and web application in limited time, I combine both into one project. 
 1. Region and Available zones are hard-coded, so you may need change to your favoriate.
+1. Monitor, Backup and restore are disabled in the solution for saving budget.
 
 ## Usage
 1. Obtain neccessary permissions in IAM for the account role to provision resources:
@@ -72,3 +73,4 @@ Demo results are presented in the folder [demo-results](demo-results)
 1. Move Scaling group to private group to reduce cost for ip address and internet risk.
 1. Implement a CICD strategy to  update web service and Database
 1. Add automatic scaling rules to scaling group
+1. Implement a solution for BCP, including backup policy, restore strategy and monitor settings.
