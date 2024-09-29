@@ -51,9 +51,12 @@ The configuration code tries to implement the infrastructure that consists of fo
 1. Accessing any non-existing page will be redirected to a fixed **404** page where there is a link to Home page
 1. Requesting to **HTTP** will be redirected to HTTPS protocol
 
+## Demo results
+Demo results are presented in the folder [demo-results](demo-results)
+
 # Troubleshoot tips
 1. To login the web server through SSH
-    + Before provision, add or replace with your public key to *ssh_authorized_keys* in file "scaling.tf"
+    + Before provision, add or replace with your public key to *ssh_authorized_keys* in file [scaling.tf](scaling.tf)
     + After provision, find the public ip addresss in EC2 console
     + Login with your private key and **ubuntu** user which have sudo priviledge
 1. To connect MySql database instance
@@ -66,3 +69,4 @@ The configuration code tries to implement the infrastructure that consists of fo
 1. Add TLS between web server and RDS
 1. Move Scaling group to private group to reduce cost for ip address and internet risk.
 1. Implement a CICD strategy to  update web service and Database
+1. Add automatic scaling rules to scaling group
