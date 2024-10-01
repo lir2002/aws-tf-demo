@@ -27,6 +27,7 @@ The configuration code tries to implement the infrastructure that consists of fo
     + NetworkManager
     + ElasticLoadBalancing
 
+1. Subscribe "[Ubuntu 22.04 LTS - Jammy](https://aws.amazon.com/marketplace/pp/prodview-f2if34z3a4e3i?ref_=aws-mp-console-subscription-detail)" in aws marketplace and agree the terms to use it as image of EC2
 1. Prepare a self-signed certificate for HTTPS.
     + Use openssl to generate private.key, certificate.csr and certificate.crt in order:
        > openssl genrsa -out private.key 2048
